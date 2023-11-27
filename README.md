@@ -64,3 +64,24 @@ Execute the script:
 ```
 python3 eval_clf.py mlpc
 ```
+
+## Match result prediction
+
+To predict the result of a match, execute the [predict_match_result](./src/predict_match_result.py) script.  
+  
+This script takes 4 arguments: 
+- The home team
+- The away team
+- Neutral: true or false
+- The model type: rf or mlpc
+  
+Go to src directory:
+
+```
+cd src
+```
+Execute the script:
+```
+python3 predict_match_result.py Morocco Brazil true rf
+```
+The result is a draw if probabilities are between 0.45 and 0.55, else the winner is printed.
