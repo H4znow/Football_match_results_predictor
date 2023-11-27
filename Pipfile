@@ -11,6 +11,7 @@ country-converter = "*"
 ipykernel = "*"
 seaborn = "*"
 joblib = "*"
+flask = "*"
 
 [dev-packages]
 
