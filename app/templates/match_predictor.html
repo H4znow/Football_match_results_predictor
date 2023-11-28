@@ -13,10 +13,19 @@
         <label for="team2">Team 2:</label>
         <input type="text" id="team2" name="team2" required>
         <br>
+        <label for="neutral">Neutral:</label>
+        <select id="neutral" name="neutral" required>
+            <option value="True">True</option>
+            <option value="False">False</option>
+        </select>
+        <br>
         <button type="submit">Predict Winner</button>
     </form>
     {% if winner %}
-    <p>Winner: {{ winner }}</p>
+        <p class="winner-announcement">The winner is: {{ winner }}</p>
+        <p class="probability-display">Probability of winning: {{ proba }}</p>
+    {% else %}
+        <p class="no-prediction">No prediction available yet.</p>
     {% endif %}
 </body>
 </html>

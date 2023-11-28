@@ -70,6 +70,35 @@ def extract_features(home_team: str, away_team:str, neutral: bool):
     return final_feature
 
 
+# Predict the result of the match according to country names and neutral in a tournament group stage
+# By default, the Random Forest model ("rf") is used
+def predict_result_group_stage(home_team: str, away_team: str, neutral: bool, model="rf"):
+
+    # Load the model
+    if model == "mlpc":
+        model = load("../assets/mlpc_clf_gridsearch.joblib")
+    else:
+        model = load("../assets/rf_clf_gridsearch.joblib")
+
+
+    # Get features to feed the model
+    features = extract_features(home_team, away_team, neutral)
+
+
+    # Predict probabilities to win for each country
+    probas = model.predict_proba(features)
+    print(probas)
+
+    # If probas are close to 0.50, we consider a draw
+    if (probas[0][0] <= 0.55) & (probas[0][0] >= 0.45):
+        winner = "Draw"
+    elif probas[0][0] > 0.55:
+        winner = home_team
+    else:
+        winner = away_team
+
+    return winner
+
 # Predict the result of the match according to country names and neutral
 # By default, the Random Forest model ("rf") is used
 def predict_result(home_team: str, away_team: str, neutral: bool, model="rf"):
@@ -88,18 +117,14 @@ def predict_result(home_team: str, away_team: str, neutral: bool, model="rf"):
     # Predict probabilities to win for each country
     probas = model.predict_proba(features)
 
-    print(probas)
-
-    # If probas are close to 0.50, we consider a draw
-    if (probas[0][0] <= 0.55) & (probas[0][0] >= 0.45):
-        winner = "Draw"
-    elif probas[0][0] > 0.55:
+    if probas[0][0] > 0.5:
         winner = home_team
+        probability_winner = probas[0][0]
     else:
         winner = away_team
+        probability_winner = probas[0][1]
 
-    return winner
-
+    return winner, probability_winner
 
 # Define a main function to use the script if need
 def __main__():

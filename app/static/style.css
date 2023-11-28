@@ -1,4 +1,4 @@
-/* Reset some default styles */
+/* Reset default styles */
 body, h1, p {
     margin: 0;
     padding: 0;
@@ -9,9 +9,18 @@ body, h1, p {
 body {
     background-color: #333;
     color: #fff;
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
+    font-size: 16px; /* Base font size */
 }
 
+/* Responsive font sizes */
+h1 {
+    font-size: 2rem; /* Responsive heading */
+}
+
+p {
+    font-size: 1rem; /* Responsive paragraph */
+}
 
 /* Header styles */
 h1 {
@@ -42,7 +51,7 @@ a {
 }
 
 a:hover {
-    color: #00bcd4; /* Change link color on hover */
+    color: #00bcd4;
 }
 
 /* Form styles */
@@ -56,12 +65,15 @@ form {
 
 label {
     color: #00bcd4;
+    display: block; /* Improve form layout */
+    margin-bottom: .5rem;
 }
 
-input[type="text"] {
+input[type="text"],
+select { /* Style for select element */
     width: 100%;
     padding: 10px;
-    margin: 5px 0;
+    margin-bottom: 10px;
     background-color: #222;
     color: #fff;
     border: none;
@@ -79,7 +91,46 @@ button {
 }
 
 button:hover {
-    background-color: #0097a7; /* Change button color on hover */
+    background-color: #0097a7;
 }
 
-/* Add more styles as needed */
+/* Responsive layout adjustments */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 1.5rem; /* Smaller heading for small screens */
+    }
+    form {
+        margin: 10px;
+        padding: 10px;
+    }
+}
+
+/* Accessibility improvements */
+a:focus,
+button:focus,
+input:focus,
+select:focus {
+    outline: 2px solid #00bcd4; /* Focus outline for better accessibility */
+}
+
+/* Styles for the winner announcement */
+p.winner-announcement {
+    color: #4CAF50; /* Green color for success */
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+/* Styles for the probability display */
+p.probability-display {
+    color: #2196F3; /* Blue color for information */
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+/* Styles for the 'no prediction available' message */
+p.no-prediction {
+    color: #f44336; /* Red color for alert */
+    font-size: 1rem;
+    margin-top: 20px;
+}
