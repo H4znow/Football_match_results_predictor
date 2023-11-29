@@ -12,6 +12,7 @@ ipykernel = "*"
 seaborn = "*"
 joblib = "*"
 flask = "*"
+flask-cors = "*"
 
 [dev-packages]
 
