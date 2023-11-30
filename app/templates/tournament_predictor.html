@@ -1,11 +1,88 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Tournament Predictor</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIFA World Cup Groups</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function() {
+            // Autocomplete for country names
+            $(".team-autocomplete").autocomplete({
+                source: function(request, response) {
+                    $.ajax({
+                        url: "/get_countries",
+                        dataType: "json",
+                        success: function(data) {
+                            // Extract the user input
+                            var userInput = request.term.toLowerCase();
+
+                            // Filter the country list based on the user input
+                            var filteredCountries = data.filter(function(country) {
+                                return country.toLowerCase().startsWith(userInput);
+                            });
+
+                            // Return the filtered list as autocomplete suggestions
+                            response(filteredCountries);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 </head>
 <body>
-    <h1>Tournament Predictor</h1>
-    <p>Winner: {{ winner }}</p>
+    <h1>FIFA World Cup Groups</h1>
+    
+    <form method="post" action="/save_groups">
+        {% for group in ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'] %}
+            <div class="group">
+                <h2>Group {{ group }}</h2>
+                <ul>
+                    {% for index in range(1, 6) %}
+                        <li>
+                            <label for="group{{ group }}_team{{ index }}">Team {{ index }}</label>
+                            <input type="text" id="group{{ group }}_team{{ index }}" name="group{{ group }}[]" class="team-autocomplete" required>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+    
+        <button type="submit">Save and Start Tournament</button>
+    </form>
+    
+    
+    <div class="display-groups">
+        <h2>Display Groups</h2>
+        {% if saved_groups %}
+            <ul>
+                {% for group, teams in saved_groups.items() %}
+                    <li>
+                        <strong>Group {{ group }}:</strong>
+                        {% for team in teams %}
+                            {{ team }}
+                            {% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No groups saved yet.</p>
+        {% endif %}
+    </div>
+
+    <!-- Display the championship progress -->
+    <div class="championship-progress">
+        <h2>Championship Progress</h2>
+        <ul>
+            {% for result in progress_info %}
+                <li>{{ result }}</li>
+            {% endfor %}
+        </ul>
+    </div>
 </body>
 </html>
