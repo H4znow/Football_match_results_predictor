@@ -85,3 +85,48 @@ Execute the script:
 python3 predict_match_result.py Morocco Brazil true rf
 ```
 The result is a draw if probabilities are between 0.45 and 0.55, else the winner is printed.
+
+## Championship result prediction
+
+To predict the result of a match, execute the [predict_championship](./src/predict_championship.py) script.  
+  
+This script takes one argument: 
+- The model type: rf or mlpc
+
+It relies on the [championship](./data/championship.csv) csv file to build ans predict the winner of a tournament.
+  
+Go to src directory:
+
+```
+cd src
+```
+Execute the script:
+```
+python3 predict_championship.py rf
+```
+The result is a draw if probabilities are between 0.45 and 0.55, else the winner is printed.
+
+## Run the User Interface
+
+The User Interface is a website locally hosted using the `Flask` library in Python.
+
+The application and all the files necessary to run it correctly are located in [app](./app/). In this directory, you will find the following subdirectories:
+
+- [assets](./app/assets/): Contains the models used in the UI.
+- [data](./app/data/): Contains the data used in the file, specifically for the tournament.
+- [static](./app/static/): Contains the CSS file.
+- [templates](./app/templates/): Contains the UI templates, including the welcome page template, match predictor page template, and tournament predictor template.
+- [app.py](./app/app.py): The main function of the UI.
+- [predict_match_result.py](./app/predict_match_result.py) and [predict_championship.py](./app/predict_championship.py): Contain the necessary modules and functions to predict the winner of a match or tournament.
+
+To run the UI, navigate to the app directory:
+
+```bash
+cd app
+```
+Then run the UI
+
+```bash
+python3 app.py
+```
+
