@@ -30,19 +30,34 @@
                         }
                     });
                 }
-            });
+            }); 
         });
+
+    $(document).ready(function() {
+        // Reload the page when the "New Tournament" button is clicked
+        $('#return_index').click(function() {
+                window.location.href = "/";
+            });
+
+        // Hide the form when the button is clicked
+        $('#saveButton').click(function() {
+            $('#form_groups').hide();
+        });
+    });
+
+
+
     </script>
 </head>
 <body>
     <h1>FIFA World Cup Groups</h1>
     
-    <form method="post" action="/save_groups">
+    <form id="form_groups" method="post" action="/save_groups">
         {% for group in ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'] %}
             <div class="group">
                 <h2>Group {{ group }}</h2>
                 <ul>
-                    {% for index in range(1, 6) %}
+                    {% for index in range(1, 5) %}
                         <li>
                             <label for="group{{ group }}_team{{ index }}">Team {{ index }}</label>
                             <input type="text" id="group{{ group }}_team{{ index }}" name="group{{ group }}[]" class="team-autocomplete" required>
@@ -52,7 +67,7 @@
             </div>
         {% endfor %}
     
-        <button type="submit">Save and Start Tournament</button>
+        <button id="saveButton" type="submit">Save and Start Tournament</button>
     </form>
     
     
@@ -78,11 +93,26 @@
     <!-- Display the championship progress -->
     <div class="championship-progress">
         <h2>Championship Progress</h2>
-        <ul>
+        <ul class="progress-list">
             {% for result in progress_info %}
-                <li>{{ result }}</li>
+                {% if 'Group stage Results' in result %}
+                    <li class="group-stage-header">{{ result }}</li>
+                {% elif '8 rounds of 8' in result %}
+                    <li class="group-stage-header">{{ result }}</li>
+                {% elif '4 rounds of 8' in result %}
+                    <li class="group-stage-header">{{ result }}</li>
+                {% elif 'semi-finals' in result %}
+                    <li class="group-stage-header">{{ result }}</li>
+                {% elif 'Finals' in result %}
+                    <li class="group-stage-header">{{ result }}</li>
+                {% else %}
+                    <li>{{ result }}</li>
+                {% endif %}
             {% endfor %}
         </ul>
-    </div>
+        
+    <button id="return_index" type="submit" >Home page</button>    
+</div>
+</div>
 </body>
 </html>

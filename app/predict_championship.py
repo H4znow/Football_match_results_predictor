@@ -55,11 +55,16 @@ def championship(teams: str, model="rf"):
                 group[winner]    += 3
 
             print(f"[{home_team} vs {away_team}]: {winner} wins with {probability_winner} probability")
-            championship_progress.append(f"[{home_team} vs {away_team}]: {winner} wins with {probability_winner} probability (Group stage -- {group})") # Append results to the list
+            championship_progress.append(f"[{home_team} vs {away_team}]: {winner} wins with {probability_winner} probability") # Append results to the list
 
     print("\n---------------------------------------------------------------------------------------------------------")
     print(f"Final group points: {groups}")
     print("---------------------------------------------------------------------------------------------------------\n")
+    championship_progress.append(f"""\n---------------------------------------------------------------------------------------------------------
+                                     Group stage Results
+                                     ---------------------------------------------------------------------------------------------------------\n""")
+    for group in groups :
+        championship_progress.append(f"""{group}""")
 
     # ---------------------------------------------------------------------------------------------------------------- #
     # The knockout stage                                                                                               #
@@ -82,11 +87,17 @@ def championship(teams: str, model="rf"):
     print("---------------------------------------------------------------------------------------------------------\n")
 
     # Until there only one team left, we predict the result of each match between 2 teams of the list in order
+    knockout_stage = ["8 rounds of 8", "4 rounds of 8", "semi-finals", "Finals"]
+    index = -1
     while len(knockout_teams) > 1:
-
+        index += 1
         print("\n-----------------------------------------------------------------------------------------------------")
         print("New knockout phase:")
         print("-----------------------------------------------------------------------------------------------------\n")
+        championship_progress.append(f"""\n---------------------------------------------------------------------------------------------------------
+                                     {knockout_stage[index]}
+                                     ---------------------------------------------------------------------------------------------------------\n""")
+    
 
         knockout_teams_updated = []
 
@@ -98,7 +109,7 @@ def championship(teams: str, model="rf"):
             winner, probability_winner = pmr.predict_result(home_team, away_team, False, model)
 
             print(f"[{home_team} vs {away_team}]: {winner} wins with {probability_winner} probability")
-            championship_progress.append(f"[{home_team} vs {away_team}]: {winner} wins with {probability_winner} probability (Knockout stage)") # Append results to the list
+            championship_progress.append(f"[{home_team} vs {away_team}]: {winner} wins with {probability_winner} probability") # Append results to the list
 
             knockout_teams_updated.append([winner, probability_winner])
 
@@ -107,7 +118,9 @@ def championship(teams: str, model="rf"):
     print("\n---------------------------------------------------------------------------------------------------------")
     print(f"Winner of the championship: {knockout_teams[0][0]}")
     print("---------------------------------------------------------------------------------------------------------\n")
-    championship_progress.append(f"Winner of the championship: {knockout_teams[0][0]}") # Append results to the list
+    championship_progress.append(f"""\n---------------------------------------------------------------------------------------------------------\n
+                                     Winner of the championship:\n {knockout_teams[0][0]}\n
+                                     ---------------------------------------------------------------------------------------------------------\n""")
 
     return championship_progress
 

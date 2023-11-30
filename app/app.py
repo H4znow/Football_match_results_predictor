@@ -22,7 +22,6 @@ def get_countries():
     countries_list = countries_df['Country'].tolist()
     return jsonify(countries_list)
 
-
 @app.route('/match_predictor', methods=['GET', 'POST'])
 def match_predictor():
     winner = None
@@ -74,6 +73,11 @@ def save_groups_to_csv(groups, csv_file_path):
         for index in range(4):
             csv_writer.writerow([groups['A'][index], groups['B'][index], groups['C'][index], groups['D'][index],
                                 groups['E'][index], groups['F'][index], groups['G'][index], groups['H'][index]])
+
+@app.route('/tournament_predictor')  # Add this route
+def tournament_predictor():
+    # Placeholder for the 'tournament_predictor' route
+    return render_template('tournament_predictor.html', saved_groups={}, progress_info=[])
 
 
 if __name__ == '__main__':
