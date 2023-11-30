@@ -33,26 +33,20 @@
             }); 
         });
 
-    $(document).ready(function() {
-        // Reload the page when the "New Tournament" button is clicked
-        $('#return_index').click(function() {
-                window.location.href = "/";
-            });
+        function returnToHomePage() {
+            window.location.href = "/";
+        }
 
-        // Hide the form when the button is clicked
-        $('#saveButton').click(function() {
+        function hide_form() {
             $('#form_groups').hide();
-        });
-    });
-
-
+        }
 
     </script>
 </head>
 <body>
     <h1>FIFA World Cup Groups</h1>
     
-    <form id="form_groups" method="post" action="/save_groups">
+    <form id="form_groups" method="post" action="/save_groups" style="display:none;">
         {% for group in ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'] %}
             <div class="group">
                 <h2>Group {{ group }}</h2>
@@ -67,9 +61,14 @@
             </div>
         {% endfor %}
     
-        <button id="saveButton" type="submit">Save and Start Tournament</button>
+        <button id="saveButton" type="submit" onclick="hide_form()">Save and Start Tournament</button>
     </form>
     
+    {% if saved_groups %}
+        <script>
+            hide_form()
+        </script>
+    {% endif %}
     
     <div class="display-groups">
         <h2>Display Groups</h2>
@@ -111,7 +110,7 @@
             {% endfor %}
         </ul>
         
-    <button id="return_index" type="submit" >Home page</button>    
+    <button id="return_index" onclick="returnToHomePage()">Home page</button>    
 </div>
 </div>
 </body>
