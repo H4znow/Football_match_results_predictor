@@ -144,7 +144,10 @@ def __main__():
     home_team = sys.argv[1]
     away_team = sys.argv[2]
 
-    available_teams = pd.read_csv("../data/FIFA_country_list.csv", sep=";", names=["country"], index_col=False)["country"].unique()
+
+    rera = load("./assets/rera.joblib")
+    available_teams = set(rera["home_team"].unique()) | set(rera["away_team"].unique())
+    available_teams = list(available_teams)
 
     # If country not available in list, we can't predict the result
     if home_team not in available_teams or away_team not in available_teams:

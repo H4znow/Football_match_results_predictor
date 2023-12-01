@@ -1,4 +1,5 @@
 import itertools
+from joblib import load
 import sys
 import pandas as pd
 import csv
@@ -129,11 +130,10 @@ def championship(teams: str, model="rf"):
 # -------------------------------------------------------------------------------------------------------------------- #
 
 def check_teams(home_team: str, away_team: str):
-    available_teams = pd.read_csv("../data/FIFA_country_list.csv",
-                                  sep=";",
-                                  names=["country"],
-                                  index_col=False
-                                  )["country"].unique()
+
+    rera = load("./assets/rera.joblib")
+    available_teams = set(rera["home_team"].unique()) | set(rera["away_team"].unique())
+    available_teams = list(available_teams)
 
     # If country not available in list, we can't predict the result
 

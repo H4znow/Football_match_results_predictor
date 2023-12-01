@@ -16,11 +16,10 @@ def index():
 
 @app.route('/get_countries')
 def get_countries():
-    countries_df = pd.read_csv(".\data\FIFA_country_list.csv")
-    countries_df.columns = ["Country"]
-    countries_df['Country'] = countries_df['Country'].str.rstrip(';')
-    countries_list = countries_df['Country'].tolist()
-    return jsonify(countries_list)
+    countries_df = load("./assets/rera.joblib")
+    available_teams = set(countries_df["home_team"].unique()) | set(countries_df["away_team"].unique())
+    available_teams = list(available_teams)
+    return jsonify(available_teams)
 
 @app.route('/match_predictor', methods=['GET', 'POST'])
 def match_predictor():
@@ -77,7 +76,7 @@ def save_groups_to_csv(groups, csv_file_path):
 @app.route('/tournament_predictor')  # Add this route
 def tournament_predictor():
     # Placeholder for the 'tournament_predictor' route
-    return render_template('tournament_predictor.html', saved_groups={}, progress_info=[])
+    return render_template('tournament_predictor.html', saved_groups=None, progress_info=[])
 
 
 if __name__ == '__main__':
