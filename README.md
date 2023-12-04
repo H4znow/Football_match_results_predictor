@@ -88,13 +88,12 @@ The result is a draw if probabilities are between 0.45 and 0.55, else the winner
 
 ## Championship result prediction
 
-To predict the result of a match, execute the [predict_championship](./src/predict_championship.py) script.  
+To predict the result of a Championship, execute the [predict_championship](./src/predict_championship.py) script.  
   
-This script takes one argument: 
-- The model type: rf or mlpc
+This script takes two arguments: 
+- The filepath of the file containing the list of team groups : ../data/championship.csv
+- The model type : rf or mlpc
 
-It relies on the [championship](./data/championship.csv) csv file to build ans predict the winner of a tournament.
-  
 Go to src directory:
 
 ```
@@ -102,9 +101,26 @@ cd src
 ```
 Execute the script:
 ```
-python3 predict_championship.py rf
+python3 predict_championship.py ../data/championship.csv rf
 ```
-The result is a draw if probabilities are between 0.45 and 0.55, else the winner is printed.
+
+## Data preprocessing script
+
+Although it's not required, if you want to re-run all the tasks necessary for the preprocessing of the dataset, please execute the [pre_processing](./src/pre_processing.py) script.  
+  
+The script takes no arguments, and uses the datasets located in the [/data](./data) directory, [results.csv](./data/results.csv)  and [fifa_ranking-2023-07-20.csv](./data/fifa_ranking-2023-07-20.csv).
+
+Go to src directory:
+
+```
+cd src
+```
+Execute the script:
+```
+python3 pre_processing.py
+```
+
+The preprocessing can take up to 15 minutes.
 
 ## Run the User Interface
 
