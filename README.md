@@ -104,24 +104,6 @@ Execute the script:
 python3 predict_championship.py ../data/championship.csv rf
 ```
 
-## Data preprocessing script
-
-Although it's not required, if you want to re-run all the tasks necessary for the preprocessing of the dataset, please execute the [pre_processing](./src/pre_processing.py) script.  
-  
-The script takes no arguments, and uses the datasets located in the [/data](./data) directory, [results.csv](./data/results.csv)  and [fifa_ranking-2023-07-20.csv](./data/fifa_ranking-2023-07-20.csv).
-
-Go to src directory:
-
-```
-cd src
-```
-Execute the script:
-```
-python3 pre_processing.py
-```
-
-The preprocessing can take up to 15 minutes.
-
 ## Run the User Interface
 
 The User Interface is a website locally hosted using the `Flask` library in Python.
@@ -146,3 +128,20 @@ Then run the UI
 python3 app.py
 ```
 
+## Data preprocessing script
+
+Although it's not required, if you want to re-run all the tasks necessary for the preprocessing of the dataset, please execute the [pre_processing](./src/pre_processing.py) script.  
+  
+The script takes no arguments, and uses the datasets located in the [/data](./data) directory, [results.csv](./data/results.csv)  and [fifa_ranking-2023-07-20.csv](./data/fifa_ranking-2023-07-20.csv).
+
+Go to src directory:
+
+```
+cd src
+```
+Execute the script:
+```
+python3 pre_processing.py
+```
+
+The preprocessing can take up to 15 minutes.
