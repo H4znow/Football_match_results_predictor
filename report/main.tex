@@ -88,7 +88,7 @@
         \vspace{0.8cm}
         
         \textbf{Supervised by:} \\
-        FORMETI Enrico\\
+        FORMENTI Enrico\\
         
         \vspace{1.5cm}
         
@@ -104,11 +104,11 @@
 \newpage
 \section{Project}
 
-The "Football Predictor" project is undertaken as part of the Neural Network course, under the guidance of Professor [Insert Professor's Name]. The primary objective is to develop an artificial intelligence model capable of predicting the outcomes of football matches, specifically identifying the winning team. This endeavor leverages two datasets, which will be detailed in the subsequent sections, to train and optimize the predictive model.
+The "Football Predictor" project is undertaken as part of the Neural Network course, under the guidance of Professor Formenti Enrico. The primary objective is to develop an artificial intelligence model capable of predicting the outcomes of football matches, specifically identifying the winning team. This endeavor leverages two datasets, which will be detailed in the subsequent sections, to train and optimize the predictive model.
 
 \section{Project Presentation}
 
-This project aims to utilize machine learning techniques to predict football match outcomes, blending the realms of sports analytics and artificial intelligence. The foundation for our predictions is laid upon two datasets - the "International football results from 1872 to 2023" and the "FIFA World Ranking 1992-2023." The former comprises over 45,000 international football match results, spanning from the inaugural match in 1872 to 2023, sourced from various international football associations. The latter dataset contains FIFA rankings for men's national teams from 1992 to (July) 2023. These datasets, referred to as "results" and "ranking," respectively, serve as the building blocks for our predictive model.\\
+This project aims to utilize machine learning techniques to predict football match outcomes, blending the realms of sports analytic and artificial intelligence. The foundation for our predictions is based upon two datasets - the "International football results from 1872 to 2023" and the "FIFA World Ranking 1992-2023." The former comprises over 45,000 international football match results, spanning from the inaugural match in 1872 to 2023, sourced from various international football associations. The latter dataset contains FIFA rankings for men's national teams from 1992 to (July) 2023. These datasets, referred to as "results" and "ranking," respectively, serve as the building blocks for our predictive model.\\
 
 In the end, we should be able to predict match results and the winner of a championship.\\
 
@@ -126,7 +126,7 @@ The source code is available at the following github repository: \href{https://g
 The collaborative effort behind the Football Predictor project is led by the following team members:
 \begin{itemize}
     \item Marouan Boulli
-    \item Raphael Breaud
+    \item Rafael Baptista
     \item Amine Haddou
 \end{itemize}
 Each member brings a unique set of skills and expertise to the project, fostering a diverse and capable team.
@@ -135,8 +135,8 @@ Each member brings a unique set of skills and expertise to the project, fosterin
 
 The project relies on two key datasets obtained from Kaggle's website:
 \begin{enumerate}
-    \item "International football results from 1872 to 2023," available for download \href{lien_vers_le_fichier_results}{here}.
-    \item "FIFA World Ranking 1992-2023," accessible \href{lien_vers_le_fichier_ranking}{here}.
+    \item "International football results from 1872 to 2023," available for download \href{https://www.kaggle.com/datasets/martj42/international-football-results-from-1872-to-2017}{here}.
+    \item "FIFA World Ranking 1992-2023," accessible \href{https://www.kaggle.com/datasets/cashncarry/fifaworldranking}{here}.
 \end{enumerate}
 The first dataset encompasses a comprehensive collection of over 45,000 international football match results, spanning from the inception of official matches in 1872 to 2023, sourced from diverse international football associations. The second dataset provides FIFA rankings for men's national teams from 1992 to (July) 2023. These datasets, denoted as "results" and "ranking," form the cornerstone for our predictive modeling efforts.
 
@@ -160,12 +160,12 @@ In this section, we delve into the preprocessing steps applied to the datasets.
 
 \subsection{Fixing Country Names}
 
-The dataset posed challenges with inconsistent country names, including countries that no longer exist, those that underwent name changes, and variations in syntax. To address this, we employed two methods:\\
+The dataset posed some challenges with inconsistent country names, including countries that no longer exists, those that underwent name changes, and variations in syntax. To address this, we employed two methods:\\
 
 1) Utilizing the following ChatGPT prompt among some others that are included in this one 
 \newpage
 \chatgptprompt{Instructions: \
-You are a prompt engineer specializing in modern geography and country names, as well as football (soccer). Your task is to process a list of countries provided in various languages. Some of these countries may have specific conditions or requirements that need to be addressed. Here are the instructions to be followed: \
+You are an expert specializing in modern geography and country names, as well as football (soccer). Your task is to process a list of countries provided in various languages. Some of these countries may have specific conditions or requirements that need to be addressed. Here are the instructions to be followed: \
 1. You will receive a list of countries in different languages.
 2. Some of these countries may no longer exist, have different names, appear multiple times in different formats, be in a non-simplified form (e.g., IR Iran instead of Iran), or not have a national football team.
 3. These countries will be referred to as "false countries."
@@ -176,7 +176,7 @@ Please ensure that your response strictly adheres to the provided instructions a
 
 we generated a dictionary to replace problematic country names with correct ones (e.g., URSS -> Russia, IR IRAN -> IRAN, Reunion -> France).\\
 
-2) Mapping countries in the datasets to a Python library (insert library name) that contains the official names of all countries. This process homogenized the names using abbreviations, and we dropped countries for which we lacked information.
+2) Mapping countries in the datasets using \textit{Pandas dataframe.replace()}, the new DataFrame contains the official names of all countries. This process homogenized the names using abbreviations, and we dropped countries for which we lacked information.
 
 \subsection{Choosing a Year Cut-off}
 
@@ -253,7 +253,7 @@ To identify the features slated for removal, we employ a combination of intuitiv
 
 {\bf Country feature} : In a similar vein, we have chosen to discard the {\it country} column. The presence of a {\it neutral} column renders this redundant. If the match is not set as neutral (neutral = false), it is held in the home country. If it is, it is played in another country worldwide. The distinction between specific countries does not significantly impact the analysis in this context.\\
 
-{\bf home\_score and away\_score features} : Furthermore, we will exclude the {\it home\_score} and {\it away\_score} features since we already possess the {\it winner}, {\it home\_goals\_avg}, and {\it away\_goals\_avg} features. The introduction of average goal features provides a more nuanced perspective on team performance, considering that the number of goals alone may not fully capture a team's overall effectiveness. By removing the score columns, we aim to enhance the model's generalization capability and reduce the risk of overfitting. Anyway, the scores should not be present in the features since the column "winner" (label) has been created using the scores.\\
+{\bf home\_score and away\_score features} : Furthermore, we will exclude the {\it home\_score} and {\it away\_score} features since we already have the {\it winner}, {\it home\_goals\_avg}, and {\it away\_goals\_avg} features. The introduction of average goal features provides a more nuanced perspective on team performance, considering that the number of goals alone may not fully capture a team's overall effectiveness. By removing the score columns, we aim to enhance the model's generalization capability and reduce the risk of overfitting. Anyway, the scores should not be present in the features since the column "winner" (label) has been created using the scores.\\
 
 {\bf previous\_points\_home and previous\_points\_away Features} : As depicted in the correlation heat map \ref{fig:corr_hm}, \textit{previous\_points\_home} and \textit{previous\_points\_away} are respectively highly correlated with \textit{total\_points\_home} and \textit{total\_points\_away}. Over multiple matches, the number of points does not vary significantly, potentially explaining this correlation. We posit that the total number of points alone suffices, rendering the information from \textit{previous\_points} redundant, despite its slight variations.
 
@@ -657,7 +657,7 @@ As we're not sure about overfitting, we choose the model with the highest accura
 
 \section{Python-Based User Interface for Predictive Models}
 
-To elegantly expose and allow users to test our models, we have implemented a Python-based user interface using Flask. The interface, hosted locally as a website, leverages the Flask library for seamless interaction.
+To better expose and allow users to test our models, we have implemented a Python-based user interface using Flask. The interface, hosted locally as a website, leverages the Flask library for seamless interaction.
 
 \subsection{User Interface Structure}
 
@@ -721,7 +721,7 @@ Then, we train several models with different configurations, evaluate them and c
 Finally, we provide python scripts to predict the match result between 2 teams and the winner of a championship. We also provide a user interface to test these functionalities in a more user friendly way.\\
 
 
-This project is really interesting since it covers almost all parts of a machine learning project, from data preprocessing to model deployment. 
+Given that it addresses nearly every aspect of machine learning, from data preprocessing to model deployment, working on this project was quite exciting. \\
 
 The data preprocessing part seems to be the most challenging one since the model relies on the features coming from this data preprocessing, and it's not always easy to find the best way to clean and select relevant data to maximise the model performance. \\
 
