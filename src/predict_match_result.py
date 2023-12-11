@@ -186,7 +186,7 @@ def __main__():
     else:
         model = "rf"
 
-    result = predict_result(home_team, away_team, neutral, model)
+    result = predict_result_group_stage(home_team, away_team, neutral, model)
 
     if result == "Draw":
         print("It's a draw!")
