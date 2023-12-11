@@ -114,9 +114,11 @@ def __main__():
     X, y = prepare_data_for_training("../assets/rera.joblib")
 
     if model_type == "rf":
+        print("Training Random Forest model")
         train_rf_model(X, y)
         print("Random Forest model trained and saved.")
     elif model_type == "mlpc":
+        print("Training MLPC model")
         train_mlpc_model(X, y)
         print("MLP Classifier model trained and saved.")
     else:
